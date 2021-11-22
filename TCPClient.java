@@ -1,5 +1,7 @@
 import java.io.*;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class TCPClient {
     public static void main(String[] args) throws IOException {
@@ -29,11 +31,11 @@ public class TCPClient {
         }
 
         // Variables for message passing
-        Reader reader = new FileReader("C:\\Users\\evanv\\OneDrive\\Desktop\\Parallel and Distributed Computing\\File.txt");
-        BufferedReader fromFile =  new BufferedReader(reader); // reader for the string file
+        Reader reader = new FileReader("file.txt");
+        BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
         String fromServer; // messages received from ServerRouter
         String fromUser; // messages sent to ServerRouter
-        String address ="192.168.1.66"; // destination IP (Server)
+        String address = host; // destination IP (Server)
         long t0, t1, t;
 
         // Communication process (initial sends/receives

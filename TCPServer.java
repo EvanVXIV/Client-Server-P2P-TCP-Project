@@ -41,7 +41,7 @@ public class TCPServer {
             System.out.println("Client said: " + fromClient);
             if (fromClient.equals("Bye.")) // exit statement
                 bye = true;
-            fromServer = fromClient.toUpperCase(); // converting received message to upper case
+            fromServer = fromClient.toUpperCase(); // converting received message to uppr case
             System.out.println("Server said: " + fromServer);
             out.println(fromServer); // sending the converted message back to the Client via ServerRouter
         }
