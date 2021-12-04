@@ -3,13 +3,16 @@ import java.net.*;
 
 public class TCPServer {
     public static void main(String[] args) throws IOException {
-        // Variables for setting up connection and communicaton
+
+        // Variables for setting up connection and communication
         Socket Socket = null; // socket to connect with ServerRouter
         PrintWriter out = null; // for writing to ServerRouter
         BufferedReader in = null; // for reading form ServerRouter
-        String routerName = "localhost"; // ServerRouter host name
+        InetAddress addr = InetAddress.getLocalHost();
+        String host = addr.getHostAddress(); // Server machine's IP
+        String routerName = "10.249.168.37"; // ServerRouter host name
         int SockNum = 5555; // port number
-        String DestinationIP = "192.168.1.66";// destination IP (Client)
+        System.out.println("Server Host: " + host);
 
         // Tries to connect to the ServerRouter
         try {
@@ -22,29 +25,30 @@ public class TCPServer {
             System.exit(1);
         }
         catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: " + routerName + "\n" + e.toString());
+            System.err.println("Couldn't get I/O for the connection to: " + routerName);
             System.exit(1);
         }
 
         // Variables for message passing
         String fromServer; // messages sent to ServerRouter
         String fromClient; // messages received from ServerRouter
+        String address ="127.0.0.1"; // destination IP (Client)
 
         // Communication process (initial sends/receives)
-        out.println(DestinationIP);// initial send (IP of the destination Client)
+        out.println(address);// initial send (IP of the destination Client)
         fromClient = in.readLine();// initial receive from router (verification of connection)
         System.out.println("ServerRouter: " + fromClient);
 
-        boolean bye = false;
         // Communication while loop
-        while ((fromClient = in.readLine()) != null && !bye) {
+        while ((fromClient = in.readLine()) != null) {
             System.out.println("Client said: " + fromClient);
             if (fromClient.equals("Bye.")) // exit statement
-                bye = true;
-            fromServer = fromClient.toUpperCase(); // converting received message to uppr case
+                break;
+            fromServer = fromClient.toUpperCase(); // converting received message to upper case
             System.out.println("Server said: " + fromServer);
             out.println(fromServer); // sending the converted message back to the Client via ServerRouter
         }
+
 
         // closing connections
         out.close();
