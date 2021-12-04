@@ -1,7 +1,5 @@
 import java.io.*;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 
 public class TCPClient {
     public static void main(String[] args) throws IOException {
@@ -31,12 +29,44 @@ public class TCPClient {
         }
 
         // Variables for message passing
-        Reader reader = new FileReader("file.txt");
-        BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
+        Reader reader = new FileReader("C:\\Users\\evanv\\OneDrive\\Desktop\\Parallel and Distributed Computing\\File5.txt");
+        BufferedReader fromFile =  new BufferedReader(reader); // reader for the string file
         String fromServer; // messages received from ServerRouter
         String fromUser; // messages sent to ServerRouter
-        String address = host; // destination IP (Server)
+        String address ="10.255.128.104"; // destination IP (Server)
+        //long t0, t1, t;
+
+        File av = new File("C:\\Users\\evanv\\OneDrive\\Desktop\\Parallel and Distributed Computing\\VideoFile4.avi");
+        BufferedInputStream bis = null;
+        FileInputStream fis = null;
+
+            try {
+                fis = new FileInputStream(av);
+                bis = new BufferedInputStream(fis);
+                System.out.println("Wav file converted to bytes: ");
+                while (bis.available() > 0) {
+                    System.out.print((char)bis.read());
+                }
+            }  catch(FileNotFoundException fnfe)    {
+                System.out.println("Specified file not found " + fnfe);
+            }   catch (IOException ioe) {
+                System.out.println("I/O Exception: " + ioe);
+            }
+            finally {
+                try {
+                    if (bis != null && fis != null)
+                    {
+                        fis.close();
+                        bis.close();
+                    }
+                }catch(IOException ioe)
+                {
+                    System.out.println("Error in InputStream close(): " + ioe);
+                }
+            }
         long t0, t1, t;
+
+
 
         // Communication process (initial sends/receives
         out.println(address);// initial send (IP of the destination Server)
@@ -65,7 +95,6 @@ public class TCPClient {
         // closing connections
         out.close();
         in.close();
-        fromFile.close();
         Socket.close();
     }
 }
