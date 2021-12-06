@@ -31,7 +31,7 @@ public class P2PClient {
     // Registers node with server router
     private void registerSelf() throws IOException {
         String address = this.addr.getHostAddress();
-        this.out.println("REGISTER");
+        this.out.println("REGISTER:" + address);
         this.out.println(address);
         String response = this.in.readLine(); //initial receive from router (verification of connection)
         System.out.println("ServerRouter: " + response);
@@ -39,8 +39,7 @@ public class P2PClient {
 
     // Requests address for node 'nodeId' from ServerRouter
     public String getAddressForNode(int nodeId) throws IOException {
-        this.out.println("CLIENT"); // Client sends the IP of its machine as initial send
-        this.out.println(nodeId);
+        this.out.println("LOOKUP:" + nodeId); // Client sends the IP of its machine as initial send
         return this.in.readLine();
     }
 
