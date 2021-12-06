@@ -38,7 +38,7 @@ public class P2PClient {
     }
 
     // Requests address for node 'nodeId' from ServerRouter
-    public String getAddressForNode(char nodeId) throws IOException {
+    public String getAddressForNode(int nodeId) throws IOException {
         this.out.println("CLIENT"); // Client sends the IP of its machine as initial send
         this.out.println(nodeId);
         return this.in.readLine();
